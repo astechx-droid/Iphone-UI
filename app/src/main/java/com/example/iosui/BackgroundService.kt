@@ -19,7 +19,7 @@ class BackgroundService : Service() {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("iOS Experience Active")
             .setContentText("Maintaining your iOS-style UI")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.appstore_icon)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
         
