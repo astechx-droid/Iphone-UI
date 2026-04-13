@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:background="@drawable/dynamic_island_background"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+    <LinearLayout
+        android:id="@+id/island_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <!-- Default Pill Content -->
+        <ImageView
+            android:id="@+id/island_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_battery_charging"
+            android:tint="@color/ios_green" />
+
+        <TextView
+            android:id="@+id/island_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Charging 85%"
+            android:textColor="@color/ios_white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

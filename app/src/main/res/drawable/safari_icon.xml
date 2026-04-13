@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="60dp"
+    android:height="60dp"
+    android:viewportWidth="60"
+    android:viewportHeight="60">
+    <!-- Blue Circle Background -->
+    <path
+        android:fillColor="#007AFF"
+        android:pathData="M30,0C13.4,0,0,13.4,0,30s13.4,30,30,30s30-13.4,30-30S46.6,0,30,0z"/>
+    <!-- Compass Pointer -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,10l4,16l16,4l-16,4l-4,16l-4-16l-16-4l16-4z"/>
+    <!-- Compass Red Tip -->
+    <path
+        android:fillColor="#FF3B30"
+        android:pathData="M30,10l4,16l-8,0z"/>
+</vector>

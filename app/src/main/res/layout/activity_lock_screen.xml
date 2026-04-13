@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ios_lock_wallpaper">
+
+    <!-- Digital Watch -->
+    <TextClock
+        android:id="@+id/lock_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:format12Hour="hh:mm"
+        android:format24Hour="HH:mm"
+        android:textColor="@color/ios_light_grey"
+        android:textSize="90sp"
+        android:fontFamily="sans-serif-light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lock_clock"
+        android:layout_centerHorizontal="true"
+        android:text="Monday, April 13"
+        android:textColor="@color/ios_light_grey"
+        android:textSize="20sp" />
+
+    <!-- PIN Entry UI -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Passcode"
+            android:textColor="@color/ios_white"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/pin_entry"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:gravity="center"
+            android:letterSpacing="1.5"
+            android:background="@drawable/glass_edittext_bg"
+            android:textColor="@color/ios_white" />
+
+    </LinearLayout>
+
+</RelativeLayout>
