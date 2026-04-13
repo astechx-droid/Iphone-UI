@@ -10,6 +10,13 @@ import android.widget.FrameLayout
 import android.animation.ValueAnimator
 import android.view.View
 import android.util.TypedValue
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
+import android.widget.TextView
+import android.widget.ImageView
 
 class DynamicIslandService : AccessibilityService() {
 
@@ -21,6 +28,16 @@ class DynamicIslandService : AccessibilityService() {
     private var offsetX = 0
     private var offsetY = 12
 
+    private val batteryReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val status = intent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+            if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
+                updateIsland("Charging", R.drawable.ic_battery_charging)
+                expandIsland()
+            }
+        }
+    }
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
@@ -28,8 +45,9 @@ class DynamicIslandService : AccessibilityService() {
         islandView = LayoutInflater.from(this).inflate(R.layout.dynamic_island_layout, null)
         
         applyStyle(islandStyle)
-        
         windowManager.addView(islandView, layoutParams)
+
+        registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
     }
 
     private fun applyStyle(style: String) {
@@ -59,25 +77,18 @@ class DynamicIslandService : AccessibilityService() {
         windowManager.updateViewLayout(islandView, layoutParams)
     }
 
-    private val batteryReceiver = object : android.content.BroadcastReceiver() {
-        override fun onReceive(context: android.content.Context?, intent: android.content.Intent?) {
-            val status = intent?.getIntExtra(android.os.BatteryManager.EXTRA_STATUS, -1)
-            if (status == android.os.BatteryManager.BATTERY_STATUS_CHARGING) {
-                updateIsland("Charging", R.drawable.ic_battery_charging)
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        event?.let {
+            if (it.eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+                updateIsland("New Notification", R.drawable.appstore_icon)
                 expandIsland()
             }
         }
     }
 
-    override fun onServiceConnected() {
-        super.onServiceConnected()
-        registerReceiver(batteryReceiver, android.content.IntentFilter(android.content.Intent.ACTION_BATTERY_CHANGED))
-        // ... existing WindowManager setup ...
-    }
-
     private fun updateIsland(text: String, iconRes: Int) {
-        val textView = islandView.findViewById<android.widget.TextView>(R.id.island_text)
-        val imageView = islandView.findViewById<android.widget.ImageView>(R.id.island_icon)
+        val textView = islandView.findViewById<TextView>(R.id.island_text)
+        val imageView = islandView.findViewById<ImageView>(R.id.island_icon)
         textView.text = text
         imageView.setImageResource(iconRes)
     }
@@ -85,7 +96,6 @@ class DynamicIslandService : AccessibilityService() {
     override fun onInterrupt() {}
 
     private fun expandIsland() {
-        // Animation to expand the island
         val startWidth = islandView.width
         val endWidth = dpToPx(300)
         
@@ -104,5 +114,11 @@ class DynamicIslandService : AccessibilityService() {
             dp.toFloat(),
             resources.displayMetrics
         ).toInt()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(batteryReceiver)
+        windowManager.removeView(islandView)
     }
 }
